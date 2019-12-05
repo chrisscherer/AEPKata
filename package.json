@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-barcode-builder": "^1.0.5",
     "react-native-datepicker": "^1.7.2"
   },
   "devDependencies": {

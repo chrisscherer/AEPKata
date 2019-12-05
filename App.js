@@ -32,11 +32,19 @@ import DashboardComponent from './ReactComponents/DashboardComponent';
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {items: [], hideForm: false};
+        this.state = {items: [{ location: 'Here', itemNumber: '1234', date: '2019-1-1', description: 'Test object'}], hideForm: true};
     }
 
     addItemToList(item) {
         this.state.items.push(item);
+        this.setState({items: this.state.items, hideForm: this.state.hideForm});
+    }
+
+    removeItemFromList(itemNumber) {
+        var indexOfItemToRemove = this.state.items.findIndex(i => i.itemNumber == itemNumber);
+        if(indexOfItemToRemove > -1) {
+            array.splice(indexOfItemToRemove, 1);
+        }
         this.setState({items: this.state.items, hideForm: this.state.hideForm});
     }
 
