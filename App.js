@@ -38,7 +38,6 @@ export default class App extends Component {
             formData: { location: '', itemNumber: '', date: '', description: ''},
             hideForm: true,
             isInEdit: false,
-            fuzzySearch: '',
         };
 
         this.state.filteredItems = this.state.allItems;
@@ -73,18 +72,12 @@ export default class App extends Component {
 
     }
 
-    fuzzySearch() {
-        console.log("=================================");
-        console.log(this.state.allItems);
+    fuzzySearch(text) {
         var updatedFilteredItems = this.state.allItems.find( i => {
-        console.log("++++++++++++++++++++");
-        console.log(this.state.fuzzySearch);
-        console.log(i.itemNumber.includes(this.state.fuzzySearch));
-        console.log("++++++++++++++++++++");
-            i.itemNumber.includes(this.state.fuzzySearch);
+            return i.itemNumber.includes(text);
         })
+
         console.log(updatedFilteredItems);
-                console.log("================================");
 
         this.setState({filteredItems: updatedFilteredItems != undefined ? updatedFilteredItems : []});
     }
@@ -112,15 +105,8 @@ export default class App extends Component {
               style={{borderColor: '#00000011', borderStyle: 'solid', borderWidth: 2, textAlignVertical: 'top'}}
               placeholder="Item # Search"
               onChangeText={(text) => {
-              console.log("-=-=-=-=-=-=-=-=-=-=-=--=");
-              console.log(text);
-              this.setState({fuzzySearch: text});
-              console.log(this.state.fuzzySearch);
-              console.log("-=-=-=-=-=-=-=-=-=-=-=--=");
-
-//                this.fuzzySearch();
+                this.fuzzySearch(text);
               }}
-              value={this.state.fuzzySearch}
             />
             <ItemListComponent
                 list={this.state.filteredItems}
@@ -131,7 +117,7 @@ export default class App extends Component {
             <Button
               title={this.state.hideForm ? "Show Form" : "Hide Form"}
               color="#f70505"
-              onPress={() => this.setState({allItems: this.state.allItems, hideForm: !this.state.hideForm})}
+              onPress={() => this.setState({hideForm: !this.state.hideForm})}
             />
             {this._renderForm()}
 
