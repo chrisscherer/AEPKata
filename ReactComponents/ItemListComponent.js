@@ -21,7 +21,7 @@ export default class ItemListComponent extends Component {
       <View style={{padding: 10}}>
         <FlatList
             data={this.props.list}
-            renderItem={({item}) => <ItemListEntryComponent data={item}/>}
+            renderItem={({item}) => <ItemListEntryComponent data={item} editItem={this.props.editItem} removeItem={this.props.removeItem} />}
             keyExtractor={item => item.itemNumber}
          />
       </View>

@@ -11,7 +11,7 @@ import DatePicker from 'react-native-datepicker'
 export default class UserFormComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {isEdit: false, item: { location: '', itemNumber: '', date: '', description: ''}};
+    this.state = {isInEdit: this.props.isInEdit, item: this.props.data};
   }
 
   render() {
@@ -67,7 +67,7 @@ export default class UserFormComponent extends Component {
               onPress={() => this.setState({item: { location: '', itemNumber: '', date: '', description: ''}})}
             />
             <Button
-              title="Add"
+              title={this.state.isInEdit ? "Save" : "Add"}
               onPress={() => {
                 this.props.parentReference(this.state.item);
                 this.setState({item: { location: '', itemNumber: '', date: '', description: ''}})

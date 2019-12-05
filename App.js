@@ -32,7 +32,12 @@ import DashboardComponent from './ReactComponents/DashboardComponent';
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {items: [{ location: 'Here', itemNumber: '1234', date: '2019-1-1', description: 'Test object'}], hideForm: true};
+        this.state = {
+            items: [{ location: 'Here', itemNumber: '1234', date: '2019-1-1', description: 'Test object'}],
+            formData: { location: '', itemNumber: '', date: '', description: ''},
+            hideForm: true,
+            isInEdit: false,
+        };
     }
 
     addItemToList(item) {
@@ -40,18 +45,27 @@ export default class App extends Component {
         this.setState({items: this.state.items, hideForm: this.state.hideForm});
     }
 
-    removeItemFromList(itemNumber) {
+    removeItem(itemNumber) {
         var indexOfItemToRemove = this.state.items.findIndex(i => i.itemNumber == itemNumber);
         if(indexOfItemToRemove > -1) {
-            array.splice(indexOfItemToRemove, 1);
+            this.state.items.splice(indexOfItemToRemove, 1);
         }
         this.setState({items: this.state.items, hideForm: this.state.hideForm});
+    }
+
+    editItem(itemNumber) {
+        var indexOfItemToEdit = this.state.items.findIndex(i => i.itemNumber == itemNumber);
+        if(indexOfItemToEdit > -1) {
+            this.setState({items: this.state.items, hideForm: this.state.hideForm, formData: this.state.items[indexOfItemToEdit], isInEdit: true});
+        }
     }
 
     _renderForm() {
         if(!this.state.hideForm) {
             return (
                 <UserFormComponent
+                    data={this.state.formData}
+                    isInEdit={this.state.isInEdit}
                     onRef={ref => (this.parentReference = ref)}
                     parentReference = {this.addItemToList.bind(this)}
                  />
@@ -66,7 +80,12 @@ export default class App extends Component {
         <>
           <SafeAreaView>
             <DashboardComponent />
-            <ItemListComponent list={this.state.items}/>
+            <ItemListComponent
+                list={this.state.items}
+                onRef={ref => (this.parentReference = ref)}
+                removeItem = {this.removeItem.bind(this)}
+                editItem = {this.editItem.bind(this)}
+            />
             <Button
               title={this.state.hideForm ? "Show Form" : "Hide Form"}
               color="#f70505"
