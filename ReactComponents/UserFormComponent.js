@@ -64,11 +64,14 @@ export default class UserFormComponent extends Component {
             <Button
               title="Clear"
               color="#f70505"
-              onPress={() => console.log("clear")}
+              onPress={() => this.setState({item: { location: '', itemNumber: '', date: '', description: ''}})}
             />
             <Button
               title="Add"
-              onPress={() => console.log(this.state.item)}
+              onPress={() => {
+                this.props.parentReference(this.state.item);
+                this.setState({item: { location: '', itemNumber: '', date: '', description: ''}})
+              }}
             />
 
         </View>

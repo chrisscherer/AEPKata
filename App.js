@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -25,16 +25,34 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import UserFormComponent from './ReactComponents/UserFormComponent';
+import ItemListComponent from './ReactComponents/ItemListComponent';
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <UserFormComponent />
-      </SafeAreaView>
-    </>
-  );
+export default class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {items: []};
+    }
+
+    addItemToList(item) {
+        this.state.items.push(item);
+        this.setState({items: this.state.items});
+
+        console.log(this.state.items.length);
+    }
+
+    render() {
+      return (
+        <>
+          <SafeAreaView>
+            <ItemListComponent list={this.state.items}/>
+            <UserFormComponent
+                onRef={ref => (this.parentReference = ref)}
+                parentReference = {this.addItemToList.bind(this)}
+             />
+          </SafeAreaView>
+        </>
+      );
+    }
 };
 
 const styles = StyleSheet.create({
@@ -79,5 +97,3 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
-
-export default App;
