@@ -1,1 +1,3 @@
-Test
+So getting most of the base functionality into the app was easy enough, but I don't know react native in depth enough to know how their render lifecycle works or why setState sometimes but not always causes re-renders.
+ The edit form will populate in the JS but requires the form to be re-opened to get it to render these changes to the screen. Clearly it has something to do with setState either not firing that lifecycle hook or I
+ setup my dependencies wrong so the user form doesn't know it depends on that state variable. Same with fuzzy search, it's filtering correctly in the JS but the UI just doesn't re-render and in fact blows out the list completely.
