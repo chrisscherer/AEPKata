@@ -7,17 +7,16 @@ import {
   StyleSheet,
 } from 'react-native';
 
-export default class ItemListEntryComponent extends Component {
+export default class DashboardComponent extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.data);
     this.state = {};
   }
 
   render() {
     return (
       <View style={{padding: 10}}>
-        <Text>Item #{this.props.data.itemNumber}; Date: {this.props.data.date}</Text>
+        <Text>This is my dashboard</Text>
       </View>
     );
   }

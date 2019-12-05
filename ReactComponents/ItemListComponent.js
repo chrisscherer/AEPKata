@@ -13,9 +13,6 @@ import ItemListEntryComponent from '../ReactComponents/ItemListEntryComponent';
 export default class ItemListComponent extends Component {
   constructor(props) {
     super(props);
-    console.log("-------------------------");
-    console.log(props);
-    console.log("-------------------------");
     this.state = {};
   }
 
@@ -24,7 +21,7 @@ export default class ItemListComponent extends Component {
       <View style={{padding: 10}}>
         <FlatList
             data={this.props.list}
-            renderItem={({item}) => <ItemListEntryComponent />}
+            renderItem={({item}) => <ItemListEntryComponent data={item}/>}
             keyExtractor={item => item.itemNumber}
          />
       </View>

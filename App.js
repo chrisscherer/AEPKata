@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  Button,
 } from 'react-native';
 
 import {
@@ -26,29 +27,45 @@ import {
 
 import UserFormComponent from './ReactComponents/UserFormComponent';
 import ItemListComponent from './ReactComponents/ItemListComponent';
+import DashboardComponent from './ReactComponents/DashboardComponent';
 
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {items: []};
+        this.state = {items: [], hideForm: false};
     }
 
     addItemToList(item) {
         this.state.items.push(item);
-        this.setState({items: this.state.items});
+        this.setState({items: this.state.items, hideForm: this.state.hideForm});
+    }
 
-        console.log(this.state.items.length);
+    _renderForm() {
+        if(!this.state.hideForm) {
+            return (
+                <UserFormComponent
+                    onRef={ref => (this.parentReference = ref)}
+                    parentReference = {this.addItemToList.bind(this)}
+                 />
+            )
+        } else {
+            return null;
+        }
     }
 
     render() {
       return (
         <>
           <SafeAreaView>
+            <DashboardComponent />
             <ItemListComponent list={this.state.items}/>
-            <UserFormComponent
-                onRef={ref => (this.parentReference = ref)}
-                parentReference = {this.addItemToList.bind(this)}
-             />
+            <Button
+              title={this.state.hideForm ? "Show Form" : "Hide Form"}
+              color="#f70505"
+              onPress={() => this.setState({items: this.state.items, hideForm: !this.state.hideForm})}
+            />
+            {this._renderForm()}
+
           </SafeAreaView>
         </>
       );
