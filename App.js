@@ -73,13 +73,15 @@ export default class App extends Component {
     }
 
     fuzzySearch(text) {
-        var updatedFilteredItems = this.state.allItems.find( i => {
-            return i.itemNumber.includes(text);
-        })
+        var updatedFilteredItems = [];
 
-        console.log(updatedFilteredItems);
+        this.state.allItems.forEach( i => {
+            if(i.itemNumber.includes(text)) {
+                updatedFilteredItems.push(i);
+            }
+        });
 
-        this.setState({filteredItems: updatedFilteredItems != undefined ? updatedFilteredItems : []});
+        this.setState({filteredItems: updatedFilteredItems});
     }
 
     _renderForm() {
