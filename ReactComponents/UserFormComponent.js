@@ -18,7 +18,7 @@ export default class UserFormComponent extends Component {
         <View>
         <Text>Location: </Text>
             <TextInput
-              style={{height: 40}}
+              style={{borderColor: '#00000011', borderStyle: 'solid', borderWidth: 2, textAlignVertical: 'top'}}
               placeholder="Enter Location"
               onChangeText={(location) => this.setState({location})}
               value={this.state.location}
@@ -27,7 +27,7 @@ export default class UserFormComponent extends Component {
         <View>
             <Text>Item Number: </Text>
             <TextInput
-              style={{height: 40}}
+              style={{borderColor: '#00000011', borderStyle: 'solid', borderWidth: 2, textAlignVertical: 'top'}}
               placeholder="Enter Item Number"
               onChangeText={(itemNumber) => this.setState({itemNumber})}
               value={this.state.itemNumber}
@@ -37,7 +37,7 @@ export default class UserFormComponent extends Component {
         <View>
             <Text>Date: </Text>
             <DatePicker
-                    style={{width: 200}}
+                    style={{width: '100%'}}
                     date={this.state.date}
                     mode="date"
                     placeholder="select date"
@@ -50,7 +50,7 @@ export default class UserFormComponent extends Component {
         <View>
             <Text>Description: </Text>
             <TextInput
-              style={{height: 120}}
+              style={{borderColor: '#00000011', borderStyle: 'solid', borderWidth: 2, textAlignVertical: 'top'}}
               placeholder="Enter Description"
               onChangeText={(description) => this.setState({description})}
               value={this.state.description}
