@@ -13,6 +13,7 @@ import {
   ScrollView,
   View,
   Text,
+  TextInput,
   StatusBar,
   Button,
 } from 'react-native';
@@ -27,37 +28,65 @@ import {
 
 import UserFormComponent from './ReactComponents/UserFormComponent';
 import ItemListComponent from './ReactComponents/ItemListComponent';
-import DashboardComponent from './ReactComponents/DashboardComponent';
 
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: [{ location: 'Here', itemNumber: '1234', date: '2019-1-1', description: 'Test object'}],
+            allItems: [{ location: 'Here', itemNumber: '1234', date: '2019-1-1', description: 'Test object'}],
+            filteredItems: [],
             formData: { location: '', itemNumber: '', date: '', description: ''},
             hideForm: true,
             isInEdit: false,
+            fuzzySearch: '',
         };
+
+        this.state.filteredItems = this.state.allItems;
     }
 
     addItemToList(item) {
-        this.state.items.push(item);
-        this.setState({items: this.state.items, hideForm: this.state.hideForm});
+        this.state.allItems.push(item);
+        this.setState({allItems: this.state.allItems, hideForm: this.state.hideForm});
     }
 
     removeItem(itemNumber) {
-        var indexOfItemToRemove = this.state.items.findIndex(i => i.itemNumber == itemNumber);
+        var indexOfItemToRemove = this.state.allItems.findIndex(i => i.itemNumber == itemNumber);
         if(indexOfItemToRemove > -1) {
-            this.state.items.splice(indexOfItemToRemove, 1);
+            this.state.allItems.splice(indexOfItemToRemove, 1);
         }
-        this.setState({items: this.state.items, hideForm: this.state.hideForm});
+        this.setState({allItems: this.state.allItems});
     }
 
     editItem(itemNumber) {
-        var indexOfItemToEdit = this.state.items.findIndex(i => i.itemNumber == itemNumber);
+        var indexOfItemToEdit = this.state.allItems.findIndex(i => i.itemNumber == itemNumber);
         if(indexOfItemToEdit > -1) {
-            this.setState({items: this.state.items, hideForm: this.state.hideForm, formData: this.state.items[indexOfItemToEdit], isInEdit: true});
+            this.state.formData = this.state.allItems[indexOfItemToEdit]
+            this.setState({formData: this.state.formData, isInEdit: true});
         }
+    }
+
+    finishEdit() {
+
+    }
+
+    cancelEdit() {
+
+    }
+
+    fuzzySearch() {
+        console.log("=================================");
+        console.log(this.state.allItems);
+        var updatedFilteredItems = this.state.allItems.find( i => {
+        console.log("++++++++++++++++++++");
+        console.log(this.state.fuzzySearch);
+        console.log(i.itemNumber.includes(this.state.fuzzySearch));
+        console.log("++++++++++++++++++++");
+            i.itemNumber.includes(this.state.fuzzySearch);
+        })
+        console.log(updatedFilteredItems);
+                console.log("================================");
+
+        this.setState({filteredItems: updatedFilteredItems != undefined ? updatedFilteredItems : []});
     }
 
     _renderForm() {
@@ -79,9 +108,22 @@ export default class App extends Component {
       return (
         <>
           <SafeAreaView>
-            <DashboardComponent />
+            <TextInput
+              style={{borderColor: '#00000011', borderStyle: 'solid', borderWidth: 2, textAlignVertical: 'top'}}
+              placeholder="Item # Search"
+              onChangeText={(text) => {
+              console.log("-=-=-=-=-=-=-=-=-=-=-=--=");
+              console.log(text);
+              this.setState({fuzzySearch: text});
+              console.log(this.state.fuzzySearch);
+              console.log("-=-=-=-=-=-=-=-=-=-=-=--=");
+
+//                this.fuzzySearch();
+              }}
+              value={this.state.fuzzySearch}
+            />
             <ItemListComponent
-                list={this.state.items}
+                list={this.state.filteredItems}
                 onRef={ref => (this.parentReference = ref)}
                 removeItem = {this.removeItem.bind(this)}
                 editItem = {this.editItem.bind(this)}
@@ -89,7 +131,7 @@ export default class App extends Component {
             <Button
               title={this.state.hideForm ? "Show Form" : "Hide Form"}
               color="#f70505"
-              onPress={() => this.setState({items: this.state.items, hideForm: !this.state.hideForm})}
+              onPress={() => this.setState({allItems: this.state.allItems, hideForm: !this.state.hideForm})}
             />
             {this._renderForm()}
 

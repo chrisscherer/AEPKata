@@ -22,7 +22,7 @@ export default class UserFormComponent extends Component {
             <TextInput
               style={{borderColor: '#00000011', borderStyle: 'solid', borderWidth: 2, textAlignVertical: 'top'}}
               placeholder="Enter Location"
-              onChangeText={(location) => this.setState({item: { location: location, itemNumber: this.state.item.itemNumber, date: this.state.item.date, description: this.state.item.description}})}
+              onChangeText={(location) => this.setState({item: { ...this.state.item, location: location}})}
               value={this.state.item.location}
             />
         </View>
@@ -31,7 +31,7 @@ export default class UserFormComponent extends Component {
             <TextInput
               style={{borderColor: '#00000011', borderStyle: 'solid', borderWidth: 2, textAlignVertical: 'top'}}
               placeholder="Enter Item Number"
-              onChangeText={(itemNumber) => this.setState({item: { location: this.state.item.location, itemNumber: itemNumber, date: this.state.item.date, description: this.state.item.description}})}
+              onChangeText={(itemNumber) => this.setState({item: { ...this.state.item,  itemNumber: itemNumber}})}
               value={this.state.item.itemNumber}
               keyboardType={'numeric'}
             />
@@ -46,7 +46,7 @@ export default class UserFormComponent extends Component {
                     format="YYYY-MM-DD"
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
-                    onDateChange={(date) => this.setState({item: { location: this.state.item.location, itemNumber: this.state.item.itemNumber, date: date, description: this.state.item.description}})}
+                    onDateChange={(date) => this.setState({item: { ...this.state.item,  date: date}})}
                   />
         </View>
         <View>
@@ -54,7 +54,7 @@ export default class UserFormComponent extends Component {
             <TextInput
               style={{borderColor: '#00000011', borderStyle: 'solid', borderWidth: 2, textAlignVertical: 'top'}}
               placeholder="Enter Description"
-              onChangeText={(description) => this.setState({item: { location: this.state.item.location, itemNumber: this.state.item.itemNumber, date: this.state.item.date, description: description}})}
+              onChangeText={(description) => this.setState({item: { ...this.state.item, description: description}})}
               value={this.state.item.description}
               multiline = {true}
               numberOfLines = {4}
